@@ -1,0 +1,257 @@
+{% extends "templates/_base.htm" %}
+{% block bodycontent %}
+ 
+ 
+ 
+<!-- Main -->
+
+
+
+<section class="wrapper style1">
+<div class="container">
+<div id="content">
+ <form>
+            <textarea name="editor1" id="editor1" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>
+            <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor1' );
+            </script>
+        </form>
+<!-- Content -->
+ 
+<h2 style="text-align:center">Calendar and Events</h2>
+<!--<img src="images/Moose.jpg" alt="Smiley face" align="middle">-->
+
+
+<p>Private & Group Lessons (by appointment)</p>
+<input type="submit" id="privateLessonsSaveTable"></input>
+<button id="btnAddPrivateLesson">New</button>
+<table id="privateLessons" class="display" cellspacing="0" width="100%">
+        <thead>
+			
+            <tr>
+				<th class="type">Type</th>
+                <th class="lesson">City</th>
+                <th class="lesson">Date</th>
+                <th class="lesson">Time</th>
+                <th class="lesson">Location</th>
+                <th class="lesson">Cost</th>
+               <th class="options">Options</th>
+				
+				
+            </tr>
+        </thead>
+		<tbody>
+		{% for plesson in privateLessons %}
+
+            <tr id="{{plesson.key.id()}}">
+				<td class="type">Private</td>
+				<td class="lesson">{{plesson.city}}</td>
+				<td class="lesson">{{plesson.date}}</td>
+				<td class="lesson">{{plesson.time}}</td>
+				<td class="lesson">{{plesson.location}}</td>
+				<td class="lesson">{{plesson.cost}}</td>
+				<td class="options"><button class='btnEdit'value='Edit'>Edit</button><button class='btnDelete'value='Delete'>Delete</button></td>
+				
+            </tr>
+			{% endfor %}
+		</tbody>
+    </table>
+	
+
+
+<p>Group Lessons/Dances Drop-In</p>
+<input type="submit" id="dropInLessonsSaveTable"></input>
+<button id="btnAddDropInLesson">New</button>
+<table id="dropInLessons" class="display" cellspacing="0" width="100%">
+        <thead>
+			
+            <tr>
+				<th class="type">Type</th>
+                <th class="lesson">City</th>
+                <th class="lesson">Date</th>
+                <th class="lesson">Time</th>
+                <th class="lesson">Location</th>
+                <th class="lesson">Cost</th>
+                <th class="options">Options</th>
+				
+				
+            </tr>
+        </thead>
+		<tbody>
+		{% for lesson in lessons %}
+
+            <tr id="{{lesson.key.id()}}">
+				<td class="type">Drop-In</td>
+				<td class="lesson">{{lesson.city}}</td>
+				<td class="lesson">{{lesson.date}}</td>
+				<td class="lesson">{{lesson.time}}</td>
+				<td class="lesson">{{lesson.location}}</td>
+				<td class="lesson">{{lesson.cost}}</td>
+				<td class="options"><button class='btnEdit'value='Edit'>Edit</button><button class='btnDelete'value='Delete'>Delete</button></td>
+				
+            </tr>
+			{% endfor %}
+		</tbody>
+    </table>
+	
+	
+	
+	
+	
+<p>Group Lessons (4-6 week sessions)</p>
+<input type="submit" id="groupLessonsSaveTable"></input>
+<button id="btnAddGroupLesson">New</button>
+<table id="groupLessons" class="display" cellspacing="0" width="100%">
+        <thead>
+			
+            <tr>
+				<th class="type">Type</th>
+                <th class="lesson">City</th>
+                <th class="lesson">Date</th>
+                <th class="lesson">Time</th>
+                <th class="lesson">Location</th>
+                <th class="lesson">Cost</th>
+                <th class="options">Options</th>
+				
+            </tr>
+        </thead>
+		<tbody>
+		{% for gLesson in groupLessons %}
+
+              <tr id="{{gLesson.key.id()}}">
+				<td class="type">Group</td>
+				<td class="lesson">{{gLesson.city}}</td>
+				<td class="lesson">{{gLesson.date}}</td>
+				<td class="lesson">{{gLesson.time}}</td>
+				<td class="lesson">{{gLesson.location}}</td>
+				<td class="lesson">{{gLesson.cost}}</td>
+				<td class="options"><button class='btnEdit'value='Edit'>Edit</button><button class='btnDelete'value='Delete'>Delete</button></td>
+				
+            </tr>
+			{% endfor %}
+		</tbody>
+    </table>
+
+	
+
+
+
+
+
+
+
+
+	<!--
+	
+
+<table align="center">
+<h3>Group Lessons / Dances (drop-in)</h3>
+<tr >
+<th>Place</th>
+<th>When</th>
+<th>Time</th>
+<th>Location</th>
+<th>Cost</th>
+<th>Register</th>
+</tr>
+<tr align="center">
+<td>Altona</td>
+<td>Sundays: Oct 5, Feb 1, Mar 22, Apr 19, May 3</td>
+<td>3:00 P Lesson 3:30 P Dancing</td>
+<td>St Mary's Community Center, 1812 Lynn Av</td>
+<td>$10 person</td> 
+<td><input type="radio" name="rdo" id="altona1" onclick="return confirm('Do you want ro register for this?')"></td>
+<tr>
+<tr align="center">
+<td>Eau Claire</td>
+<td>Wednesdays: Oct 5, Feb 1, Mar 22, Apr 19, 
+May 3 Saturday: Oct25 (Fall Formal with Hors )</td>
+<td>3:00 P Lesson 3:30 P Dancing</td>
+<td>St Mary's Community Center, 1812 Lynn Av</td>
+<td>$20 person</td>
+<td><input type="radio" name="rdo" id="eau1" onclick="return confirm('Do you want ro register for this?')"></td>
+<tr>
+<tr align="center">
+<td>MarshField</td>
+<td>Oct 24</td>
+<td>7:30 P Lesson, 8:30 P Dancing</td>
+<td>St Mary's Community Center, 1812 Lynn Av</td>
+<td>$10 person</td>
+<td><input type="radio" name="rdo" id="marsh1" onclick="return confirm('Do you want ro register for this?')"></td>
+<tr>
+<tr align="center">
+<td>Menomonie</td>
+<td>Oct 5, Feb 1, Mar 22, Apr 19, May 3</td>
+<td>3:00 P Lesson 3:30 P Dancing</td>
+<td>St Mary's Community Center, 1812 Lynn Av</td>
+<td>$10 person</td>
+<td><input type="radio" name="rdo" id="meno1" onclick="return confirm('Do you want ro register for this?')"></td>
+<tr>
+</table>
+<table align="center">
+<h3>Group Lessons (4-6 week sessions)</h3>
+<tr >
+<th>Place</th>
+<th>When</th>
+<th>Time</th>
+<th>Location</th>
+<th>Cost</th>
+<th>Register</th>
+</tr>
+<tr align="center">
+<td>Eau Claire</td>
+<td>Tuesdays: Sep 16-Oct-17 
+</td>
+<td>Beginning Social Dancing at 6:15-7:30 P
+Intermediate at 7:30-8:45 P</td>
+<td>(register for location)</td>
+<td>$49 person</td>
+<td><input type="radio" name="rdo2" onclick="return confirm('Do you want ro register for this?')"></td>
+<tr>
+<tr align="center">
+<td>MarshField</td>
+<td>Mondays: Sep 29-Nov3 & Fri Oct 24 Feb 1, Mar 22, 
+Apr 19, May 3</td>
+<td>Level 1 at 5:50 P (Swing, Foxtrot, Waltz, Rumba)  
+Level 2 at 6:45 P Level 3 at 7:40 P  </td>
+<td>(register for location)</td>
+<td>$59 person</td>
+<td><input type="radio" name="rdo2" onclick="return confirm('Do you want ro register for this?')"></td>
+<tr>
+<tr align="center">
+<td>Rice</td>
+<td>Mondays: Sep 29-Nov3 & Fri Oct 24 Feb 1, Mar 22, 
+Apr 19, May 3</td>
+<td>  Level 1 at 6:00 P (Swing, Foxtrot, Waltz, Rumba) Level 2 at 7:15 P   </td>
+<td>(register for location)</td>
+<td>$59 person</td>
+<td><input type="radio" name="rdo2" onclick="return confirm('Do you want ro register for this?')"></td>
+<tr>
+
+</table>
+
+-->
+<style>
+ 
+ 
+th,tr { height: 40px; text-align:center  } 
+th {font-size:100%; font-weight: bold;background-color: #fff; background-color:#30C4DA;} td { font-size:70%; white-space:pre } img{position: relative;
+    right: -30%;
+    width: 400px;}
+
+
+ 
+</style>
+</div>
+</div>
+</section>
+<script>
+
+</script>
+ 
+
+{% endblock %}
