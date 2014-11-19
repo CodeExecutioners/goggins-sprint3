@@ -59,7 +59,7 @@ handlers:
 - url: /login
   script: login.app
 
-- url: /ckeditor_page
+- url: /ckeditor
   script: ckeditor.app
 
 

@@ -1,131 +1,160 @@
 {% extends "templates/_base.htm" %}
 {% block bodycontent %}
- 
+ <script src="js/admin/lessons.js"></script>
 <!-- Main -->
-
-
 
 <section class="wrapper style1">
 <div class="container">
-<div id="content">
- <form>
-            <textarea name="editor1" id="editor1" rows="10" cols="80">
-                This is my textarea to be replaced with CKEditor.
-            </textarea>
-            <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
-                CKEDITOR.replace( 'editor1' );
-            </script>
-        </form>
-<!-- Content -->
+			<div class="row double">
+
+				<div class="3u">
+							<div id="sidebar">
+
+								<!-- Sidebar -->
+									
+									<section>
+										<h3>Links</h3>
+										<h4>Lessons</h4>
+										<ul><a id = "privateLink" href="javascript:hideshowLessons(document.getElementById('private'))">Private & Group Lessons (by appointment)</a></ul>
+										<ul><a id = "dropLink" href="javascript:hideshowLessons(document.getElementById('dropIn'))">Group Lessons/Dances Drop-In</a></ul>
+										<ul><a id = "groupLink"href="javascript:hideshowLessons(document.getElementById('group'))">Group Lessons (4-6 week sessions)</a></ul>
+										
+									</section>
+						
+							</div>
+				</div>
+
+
+
+
+<div class="9u skel-cell-important">
+	
+		<div id="content">
+		
+		
+		
+		
+			<!--
+			 <form>
+						<textarea name="editor1" id="editor1" rows="10" cols="80">
+							This is my textarea to be replaced with CKEditor.
+						</textarea>
+						<script>
+							// Replace the <textarea id="editor1"> with a CKEditor
+							// instance, using default configuration.
+							CKEDITOR.replace( 'editor1' );
+						</script>
+					</form>
+					
+			-->
+			<!-- Content -->
  
-<h2 style="text-align:center">Calendar and Events</h2>
-<!--<img src="images/Moose.jpg" alt="Smiley face" align="middle">-->
+			<h2 style="text-align:center">Calendar and Events</h2>
+			<!--<img src="images/Moose.jpg" alt="Smiley face" align="middle">-->
 
+			<article id="private" style="visibility:hidden;">
+			<p>Private & Group Lessons (by appointment)</p>
 
-<p>Private & Group Lessons (by appointment)</p>
+			<table id="privateLessons" class="display" cellspacing="0" width="100%">
+					<thead>
+						
+						<tr>
+							<th>Type</th>
+							<th>City</th>
+							<th>Date</th>
+							<th>Time</th>
+							<th>Location</th>
+							<th>Cost</th>
+						   
+							
+						</tr>
+					</thead>
+					<tbody>
+					{% for plesson in privateLessons %}
 
-<table id="privateLessons" class="display" cellspacing="0" width="100%">
-        <thead>
-			
-            <tr>
-				<th>Type</th>
-                <th>City</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Location</th>
-                <th>Cost</th>
-               
+						<tr id="{{plesson.key.id()}}">
+							<td>Private</td>
+							<td>{{plesson.city}}</td>
+							<td>{{plesson.date}}</td>
+							<td>{{plesson.time}}</td>
+							<td>{{plesson.location}}</td>
+							<td>{{plesson.cost}}</td>
+							
+							
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</article>
+
+			<article id="dropIn" style="visibility:hidden">
+			<p>Group Lessons/Dances Drop-In</p>
+			<table id="dropInLessons" class="display" cellspacing="0" width="100%">
+					<thead>
+						
+						<tr>
+							<th>Type</th>
+							<th>City</th>
+							<th>Date</th>
+							<th>Time</th>
+							<th>Location</th>
+							<th>Cost</th>
+						 
+						</tr>
+					</thead>
+					<tbody>
+					{% for lesson in lessons %}
+
+						<tr id="{{lesson.key.id()}}">
+							<td>Drop-In</td>
+							<td>{{lesson.city}}</td>
+							<td>{{lesson.date}}</td>
+							<td>{{lesson.time}}</td>
+							<td>{{lesson.location}}</td>
+							<td>{{lesson.cost}}</td>
+							
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</article>
 				
-            </tr>
-        </thead>
-		<tbody>
-		{% for plesson in privateLessons %}
-
-            <tr id="{{plesson.key.id()}}">
-				<td>Private</td>
-				<td>{{plesson.city}}</td>
-				<td>{{plesson.date}}</td>
-				<td>{{plesson.time}}</td>
-				<td>{{plesson.location}}</td>
-				<td>{{plesson.cost}}</td>
 				
 				
-            </tr>
-			{% endfor %}
-		</tbody>
-    </table>
-	
+			<article id="group" style="visibility:hidden">
+			<p>Group Lessons (4-6 week sessions)</p>
 
+			<table id="groupLessons" class="display" cellspacing="0" width="100%">
+					<thead>
+						
+						<tr>
+							<th>Type</th>
+							<th>City</th>
+							<th>Date</th>
+							<th>Time</th>
+							<th>Location</th>
+							<th>Cost</th>
+						   
+							
+						</tr>
+					</thead>
+					<tbody>
+					{% for groupLesson in groupLessons %}
 
-<p>Group Lessons/Dances Drop-In</p>
-<table id="dropInLessons" class="display" cellspacing="0" width="100%">
-        <thead>
-			
-            <tr>
-				<th>Type</th>
-                <th>City</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Location</th>
-                <th>Cost</th>
-             
-            </tr>
-        </thead>
-		<tbody>
-		{% for lesson in lessons %}
+						  <tr id="{{groupLesson.key.id()}}">
+							<td>Group</td>
+							<td>{{groupLesson.city}}</td>
+							<td>{{groupLesson.date}}</td>
+							<td>{{groupLesson.time}}</td>
+							<td>{{groupLesson.location}}</td>
+							<td>{{groupLesson.cost}}</td>
+							
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 
-            <tr id="{{lesson.key.id()}}">
-				<td>Drop-In</td>
-				<td>{{lesson.city}}</td>
-				<td>{{lesson.date}}</td>
-				<td>{{lesson.time}}</td>
-				<td>{{lesson.location}}</td>
-				<td>{{lesson.cost}}</td>
-				
-            </tr>
-			{% endfor %}
-		</tbody>
-    </table>
-	
-	
-	
-	
-	
-<p>Group Lessons (4-6 week sessions)</p>
-
-<table id="groupLessons" class="display" cellspacing="0" width="100%">
-        <thead>
-			
-            <tr>
-				<th>Type</th>
-                <th>City</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Location</th>
-                <th>Cost</th>
-               
-				
-            </tr>
-        </thead>
-		<tbody>
-		{% for groupLesson in groupLessons %}
-
-              <tr id="{{groupLesson.key.id()}}">
-				<td>Group</td>
-				<td>{{groupLesson.city}}</td>
-				<td>{{groupLesson.date}}</td>
-				<td>{{groupLesson.time}}</td>
-				<td>{{groupLesson.location}}</td>
-				<td>{{groupLesson.cost}}</td>
-				
-            </tr>
-			{% endfor %}
-		</tbody>
-    </table>
-
-	
+				</article>
 
 
 
@@ -234,12 +263,12 @@ th {font-size:100%; font-weight: bold;background-color: #fff; background-color:#
 
  
 </style>
+		</div>
+</div>
 </div>
 </div>
 </section>
-<script>
 
-</script>
  
 
 {% endblock %}

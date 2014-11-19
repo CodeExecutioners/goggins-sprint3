@@ -50,6 +50,7 @@
 		<!--Script for datatables-->
 		<script src="js/admin/lessons.js"></script>
 		<script src="js/admin/resources.js"></script>
+		<script src="js/admin/ckeditorFunctions.js"</script>
 		
 		
 		<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -129,30 +130,35 @@
 							</div>
 						</div>
 						<section class="6u">
-							<h3>Get In Touch</h3>
-							<form  action="/contact_mail" method = "post">
+							<h3>Contact Us</h3>
+							<form  id="contactFooterForm" action="/contact_mail" method = "post">
 							
 							
 							
 								<div class="row half collapse-at-2">
 									<div class="6u">
-										<input type="text" name="inputName" id="name" placeholder="Name" />
-										<input type="text" name="phone" id="phone" placeholder="Phone" />
+										<input type="text" name="inputName" id="name" placeholder="Name" required/>
+										<input type="text" name="phone" id="phone" placeholder="Phone" required/>
 									</div>
 									<div class="6u">
-										<input type="text" name="inputEmail" id="inputEmail" placeholder="Email" />
-										<input type="text" name="inputSubject" id="inputSubject" placeholder="Subject" />
+										<input type="text" name="inputEmail" id="inputEmail" placeholder="Email" required/>
+										<input type="text" name="inputSubject" id="inputSubject" placeholder="Subject" required/>
 									</div>
 									
 								</div>
 								<div class="12u">
-										<textarea name="inputMessage" id="inputMessage" placeholder="Message" rows="5"></textarea>
+										<textarea name="inputMessage" id="inputMessage" placeholder="Message" rows="5" required></textarea>
 										<input type="submit" class="button alt" value="Send Message" />
 								</div>
 								
 									
 								
 							</form>
+								<script>
+						
+								$("#contactFooterForm").validate() // initialize the plugin
+								
+								</script>
 						</section>
 					</div>
 				</div>

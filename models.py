@@ -3,7 +3,34 @@ import datetime
 import logging
 from google.appengine.ext import ndb
 
+class Editor(ndb.Model):
+	#perhaps needs an CK Editor ID
+	editorID = ndb.StringProperty
+	html = ndb.StringProperty()
 
+	@classmethod
+	def insertEditor(self, html):
+			logging.debug('insertEditor start')
+			try:
+				editor = self(html = html)
+				editor.put()
+				logging.debug('insertEditor success')
+			except:
+				logging.error('insertEditor failed')
+				
+	@classmethod
+	def getAllEditors(self):
+		try:
+			return self.query()
+		except:
+			logging.error('getAllEditors failed')
+			
+	@classmethod
+	def getEditorByID(self):
+		try:
+			return self.query()
+		except:
+			logging.error('getAllEditors failed')
 
 
 class Lesson(ndb.Model):
