@@ -1,4 +1,5 @@
-*.yaml
+#Ignored files for codeexecutioners
+app.yaml
 
 *.py
 

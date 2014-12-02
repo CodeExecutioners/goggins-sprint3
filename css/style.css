@@ -790,7 +790,7 @@
 
 	#cta {
 		text-align: center;
-		padding: 3.5em 0;
+		padding: 0;
 	}
 
 		#cta header h2 {
@@ -807,7 +807,10 @@
 /* Footer */
 
 	#footer {
-		padding: 4em 0 8em 0;
+		padding: 0;
+		margin-top:-26px;
+		background-color:#333;
+		color:#c0c0c0;
 	}
 
 		#footer a {
@@ -821,7 +824,7 @@
 			}
 
 		#footer .container {
-			margin-bottom: 4em;
+			margin-bottom: 0em;
 		}
 
 		#footer .icons {
