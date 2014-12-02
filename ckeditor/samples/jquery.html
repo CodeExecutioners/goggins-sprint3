@@ -20,6 +20,25 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 		}
 
 	</style>
+	
+	<script type="text/javascript">
+    $(document).ready(function CKupdate() {
+	
+		
+	
+        $('#myCKForm').ajaxForm(function () {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }); 
+
+		alert("Updated CK Editor");
+    });
+</script>
+	
+	
+	
+	
 	<script>
 
 		CKEDITOR.disableAutoInline = true;
@@ -39,7 +58,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 	<h1 class="samples">
 		<a href="index.html" id="a-test">CKEditor Samples</a> &raquo; Create Editors with jQuery
 	</h1>
-	<form action="sample_posteddata.php" method="post">
+	<form id="myCKForm">
 		<div class="description">
 			<p>
 				This sample shows how to use the <a href="http://docs.ckeditor.com/#!/guide/dev_jquery">jQuery adapter</a>.
@@ -79,7 +98,9 @@ $( document ).ready( function() {
 		</textarea>
 
 		<p style="overflow: hidden">
-			<input style="float: left" type="submit" value="Submit">
+			<!--<input style="float: left" type="submit" value="Submit">-->
+			<button type="submit" id="submitButton" onclick="CKupdate();$('#myForm').ajaxSubmit();">Submit CK DATA</button>
+		
 			<span style="float: right">
 				<input type="text" id="val" value="I'm using jQuery val()!" size="30">
 				<input onclick="setValue();" type="button" value="Set value">

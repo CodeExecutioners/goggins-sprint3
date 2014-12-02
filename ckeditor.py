@@ -17,12 +17,21 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 	
 class CKEditorPage(webapp2.RequestHandler):
 	def get(self):
-		template_values = {}
-		template = JINJA_ENVIRONMENT.get_template('ckeditor/samples/index.html')
+		editors = models.Editor.getAllEditors()
+		template_values = {'editors': editors}
+		template = JINJA_ENVIRONMENT.get_template('templates/ckeditorTest.html')
 		self.response.write(template.render(template_values))
 			
+	def post(self):
+		logging.debug("POSTED CKEDITOR DATA")
+		data = self.request.body
+		logging.debug(data)
+		
+		models.Editor.insertEditor(data)
+		#models.Editor.getAllEditors()
+		self.redirect('/ckeditor')
 		
 
 app = webapp2.WSGIApplication([
-			('/ckeditor_page', CKEditorPage),
+			('/ckeditor', CKEditorPage),
 			],debug=True)
