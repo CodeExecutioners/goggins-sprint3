@@ -4,19 +4,19 @@
 		
 		<script type="text/javascript">
 			function hideshow(which){
-				alert('hideshow')
+			
 				var resArray = [];
 				document.getElementById('link1').style.display="none"
 				
-				
+			
 				{% for resource in resources %}
-					res = document.getElementById('{{resource.key.id()}}')
+					res = document.getElementById('{{resource.type}}' + '{{resource.title}}')
 					resArray.push(res)
 				{% endfor %}
 				
 				var i = 0
 				{% for resource in resources %}
-					if (which.id=='{{resource.key.id()}}') {
+					if (which.id=='{{resource.type}}' + '{{resource.title}}') {
 						resArray[i].style.display="block"
 					}else{
 						resArray[i].style.display="none"
@@ -31,7 +31,7 @@
 			<section class="wrapper style1">
 				<div class="container">
 					<div class="row double">
-						<div class="3u">
+						<div class="4u">
 							<div id="sidebar">
 
 								<!-- Sidebar -->
@@ -41,7 +41,7 @@
 
 										{% for resource in resources %}
 											{% if resource.type == 'link' %}
-												<ul><a href="javascript:hideshow(document.getElementById('{{resource.key.id()}}'))">{{resource.title}}</a></ul>
+												<ul><a href="javascript:hideshow(document.getElementById('{{resource.type}}{{resource.title}}'))">{{resource.title}}</a></ul>
 											{% endif %}
 												
 										{% endfor %}
@@ -49,7 +49,7 @@
 										<h3>Locations</h3>
 										{% for resource in resources %}
 											{% if resource.type == 'location' %}
-												<ul><a href="javascript:hideshow(document.getElementById('{{resource.key.id()}}'))">{{resource.title}}</a></ul>
+												<ul><a href="javascript:hideshow(document.getElementById('{{resource.type}}{{resource.title}}'))">{{resource.title}}</a></ul>
 											{% endif %}
 										{% endfor %}
 									</section>
@@ -57,7 +57,7 @@
 							</div>
 						</div>
 
-						<div class="9u skel-cell-important">
+						<div class="8u skel-cell-important">
 							<div id="content">
 
 								<!-- Content -->
@@ -74,48 +74,23 @@
 								
 								{% for resource in resources %}
 									{% if resource.type == 'link' %}
-									<!--make it editable by id-->
-									<article id="{{resource.key.id()}}" style="display: none;">
+									<article id="{{resource.type}}{{resource.title}}" style="display: none;">
 										<header>
-											
+											<a href="{{resource.linkOrAddress}}">
 											<h2>{{resource.title}}</h2>
-											
+											</a>
 										</header>
 										<a href="{{resource.linkOrAddress}}">
 											{{resource.linkOrAddress}}
 										</a>
-											<p>
-											<input class="createResourceEditor" type="button" value="Create Resource Editor">
-											<input class="removeResourceEditor"  type="button" value="Remove Resource Editor">
-											</p>
-											
-											
-											<div id="editor-{{resource.key.id()}}" class="editable">
-														
-														{{resource.desc|safe}}
-											</div>
-											<!-- This div will hold the editor. -->
-											<!--
-											<div id="editorResource">
-												
-												<div id="contentsResource" style="display: none">
-													
-													
-													<div id="editorContentsResource">
-														
-														{{resource.desc}}
-													</div>
-												</div>
-											</div>
-											-->
-										
+										{{resource.desc}}
 									</article>
 									{% endif %}
 								{% endfor %}
 								
 								{% for resource in resources %}
 									{% if resource.type == 'location' %}
-									<article id="{{resource.key.id()}}" style="display: none;">
+									<article id="{{resource.type}}{{resource.title}}" style="display: none;">
 										<header>
 											<h2>{{resource.title}}</h2>
 										</header>

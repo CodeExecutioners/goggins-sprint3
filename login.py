@@ -39,7 +39,7 @@ class LoginHandler(webapp2.RequestHandler):
 			self.session_store.save_sessions(self.response)
 	def get(self):
 		#insert a user
-		#models.Users.insertUser('testUsername', 'testPassword', 'testEmail@dancingoggin.appspot.com')
+		#models.Users.insertUser('username', 'password', 'email@test-dancingoggin.appspot.com')
 		self.session['initiated'] = 'false'
 		template_values ={}
 		path = self.request.path

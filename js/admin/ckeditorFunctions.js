@@ -8,33 +8,50 @@
 			// Create a new editor inside the <div id="editor">, setting its value to html
 			var config = {};
 			//alert("HTML: " + html);
-			newEditor = CKEDITOR.appendTo(editorID, config, html);
+			alert(editorID)
+			newEditor = CKEDITOR.replace(editorID, config, html);
+	
 			newEditor.setData(html);
 			//alert("successfully created new editor");
 			return newEditor;
 		}
 
-		function removeEditor(newEditor, editorContentsID, contentsID) {
+		function removeEditor(newEditor, editorID, ID, path) {
 			
 			if ( !newEditor )
 				return;
 
 			// Retrieve the editor contents. In an Ajax application, this data would be
 			// sent to the server or used in any other way.
-			document.getElementById(editorContentsID).innerHTML = html = newEditor.getData();
-			document.getElementById(contentsID).style.display = '';
+			document.getElementById(editorID).innerHTML = html = newEditor.getData();
+			//document.getElementById(contentsID).style.display = '';
 			//save the data when removing the editor
-					alert("New Editor Snapshot: " + newEditor.getSnapshot());
+			
+			//need to have the id of the editor and the data as json
+				 var jsonArray  = {};
+				 var id = "ID";
+				 var data = "DATA";
+				 jsonArray[id] = ID;
+				 jsonArray[data] = newEditor.getSnapshot();
+				 var json = JSON.stringify(jsonArray);
+				
+				 json = "["+json+"]";
+				 alert(json);
+			
+				
+			
+					
 					var data = newEditor.getSnapshot()
 							$.ajax({
 							 type: 'POST',
-							 url:'/ckeditor',
-							 data: data,
-							
+							 url:path,
+							 data: json,
+							 dataType: 'json',
+							 contentType:'application/json; charset=utf-8',
 							 success: function(response) {
 								alert("Success" + response)
 								//alert('redirecting...');
-								
+								window.location('/'+path)
 							 },error: function(response){
 								alert("Error with ck editor post" + response);
 							 
@@ -157,6 +174,54 @@
 						newEditor2 = removeEditor(newEditor2, 'editorcontents2', 'contents2');
 						
 				});
+				
+				
+				/*Resources CK Editor buttons*/
+				$(".createResourceEditor").on("click",  function (event) {
+						//need to have 'editor-' to prepend to the id
+						var editorID = 'editor-'+$(this).parent().parent().attr("id");
+						//alert("EDITOR ID: " + editorID);
+						html = $("#"+editorID).html()
+						
+						newEditor = createEditor(newEditor,editorID, html);
+				});
+				
+				$(".removeResourceEditor").on("click",  function (event) {
+						
+						//sets the newEditor to null
+						//get parent 
+						//need to have 'editor-' to prepend to the id
+						var editorID = 'editor-'+$(this).parent().parent().attr("id");
+						var id = $(this).parent().parent().attr("id")
+						//alert("EDITOR ID: " + editorID);
+						newEditor = removeEditor(newEditor, editorID, id, '/resources');
+						
+				});
+				
+				
+				/*Lessons*/
+			/*
+				$(".createLessonEditor").on("click",  function (event) {
+						//need to have 'editor-' to prepend to the id
+						var editorID = 'editor-'+$(this).parent().parent().attr("id");
+						//alert("EDITOR ID: " + editorID);
+						html = $("#"+editorID).html()
+						
+						newEditor = createEditor(newEditor,editorID, html);
+				});
+				
+				$(".removeLessonEditor").on("click",  function (event) {
+						
+						//sets the newEditor to null
+						//get parent 
+						//need to have 'editor-' to prepend to the id
+						var editorID = 'editor-'+$(this).parent().attr("id");
+						var id = $(this).parent().attr("id");
+						alert("EDITOR ID: " + editorID);
+						newEditor = removeEditor(newEditor, editorID, id, '/adminLessons');
+						
+				});
+				
 				
 				
 				

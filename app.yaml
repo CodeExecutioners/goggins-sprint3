@@ -9,8 +9,7 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
-  
-  
+ 
 - url: /css
   static_dir: css
 
@@ -39,7 +38,7 @@ handlers:
 - url: /lessons
   script: lessons.app 
   
-- url: /(adminLessons|deleteLessons)
+- url: /(adminLessons|addLesson|updateLesson|editLesson|deleteLesson)
   script: adminLessons.app  
   
 - url: /adminResources

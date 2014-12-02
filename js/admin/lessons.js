@@ -103,7 +103,7 @@ var par = $(this).parent().parent(); //tr
  var json = JSON.stringify(array);
  //alert("DELETE JSON: " + json)
  json = "["+json+"]";
- //alert("New JSON" + json);
+ alert("New JSON" + json);
  var path='/deleteLessons';
 		$.ajax({
              type: 'POST',
@@ -112,7 +112,7 @@ var par = $(this).parent().parent(); //tr
 			 dataType: 'json',
 			 contentType:'application/json; charset=utf-8',
              success: function(response) {
-				//alert("Success" + response)
+				alert("Success" + response)
 				//alert('redirecting...');
 				window.location = '/adminLessons';
              },error: function(response){
@@ -127,6 +127,7 @@ var par = $(this).parent().parent(); //tr
 	//postLessonsTable('#dropInLessons', path);
  };
 
+ 
  
  
 
@@ -270,6 +271,188 @@ $(function(){ //Add, Save, Edit and Delete functions code
 	postLessonsTable('#groupLessons', path);
  });   
  
+ 
+	$(".addLesson").on("click", function(event){
+		//alert("adding Lesson");
+		event.preventDefault();
+		
+		html  = $(".modal-body").html('');
+		//$(".modal-footer").html("<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button><input type='submit' id='submitAddLesson' class='btn btn-primary' value='Add Lesson'></button>");
+		//$("#submitAddLesson").bind("click", AddLesson);
+		$.ajax({
+             type: 'GET',
+			 url:'/addLesson',
+             success: function(response) {
+				//alert("Success" + response)
+				$("#myModalLabel").html('Add Lesson');
+				$(".modal-body").html(response);
+				$("#myModal").modal('show'); //hide popup
+				
+				
+             },error: function(response){
+				alert("Error with json post" + response);
+			 
+			}
+			
+			
+		});
+		
+		event.stopImmediatePropagation();
+		return false
+	});
+ 
+ 
+	$(".editLesson").on("click", function(event){
+		alert("editing Lesson");
+		event.preventDefault();
+	
+		html  = $(".modal-body").html('');
+		//$(".modal-footer").html("<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button><input type='submit' id='submitEditLesson' class='btn btn-primary' value='Edit Lesson'></button>");
+
+		var lessonID = $(this).parent().attr("id");
+		//alert("LessonID: " + lessonID);
+		
+	
+		
+		$.ajax({
+             type: 'POST',
+			 url:'/editLesson',
+             data: lessonID,
+             success: function(response) {
+				//alert("Success" + response)
+				$(".modal-body").html(response);
+				$("#myModalLabel").html('Edit Lesson');
+				$("#myModal").modal('show'); //hide popup
+				
+				
+             },error: function(response){
+				alert("Error with json post" + response);
+			 
+			}
+			
+			
+		});
+		
+		event.stopImmediatePropagation();
+		return false
+	});
+	
+	//on click for button
+	
+	$(".deleteLesson").on("click", function(event){
+		alert("deleting Lesson");
+		event.preventDefault();
+
+		var lessonID = $(this).parent().attr("id");
+		alert("LessonID: " + lessonID);
+		
+	
+		
+		$.ajax({
+             type: 'POST',
+			 url:'/deleteLesson',
+             data: lessonID,
+             success: function(response) {
+				//alert("Success" + response)
+				location.reload();
+             },error: function(response){
+				alert("Error with json post" + response);
+			 
+			}
+			
+			
+		});
+		
+		event.stopImmediatePropagation();
+		return false
+	});
+	
+	$("#submitLesson").on("click", function(event){
+		
+		
+		event.preventDefault()
+		
+	
+		var form = $(".formLesson");
+		
+		
+		var data = JSON.stringify(form.serializeArray())
+		
+		alert(data);
+		var path = '/updateLesson';
+		$.ajax({
+             type: 'POST',
+			 url:path,
+             data: data,
+			 dataType: 'json',
+			 contentType:'application/json; charset=utf-8',
+             success: function(response) {
+				
+				//alert("Success" + response)
+				//alert('redirecting...');
+				$("#myModal").modal('hide'); //hide popup
+				location.reload();
+				
+				
+             },error: function(response){
+				alert("Error with json post" + response);
+			 
+			}
+			
+			
+		});
+		event.stopImmediatePropagation();
+		return false;
+		
+
+		
+		
+	});
+	/*
+	 NOT USED
+	
+	$("#editLesson").on("click", function(event){
+		
+		event.preventDefault();
+		
+		$('input').each(function(){
+		  $(this).attr('value', $(this).val());
+		});
+		alert("EDIT MODAL HTML: " + $("#myModalEdit").html());
+		alert($("#editLessonForm").html());
+		$("#editLessonForm").load
+		var form = $("#editLessonForm");
+		
+		var data = JSON.stringify(form.serializeArray())
+		
+		
+		alert(data);
+		var path = '/lessons';
+		$.ajax({
+             type: 'POST',
+			 url:path,
+             data: data,
+			 dataType: 'json',
+			 contentType:'application/json; charset=utf-8',
+             success: function(response) {
+				
+				alert("Success" + response)
+				//alert('redirecting...');
+				$("#myModalEdit").modal('hide'); //hide popup
+				window.location = '/lessons';
+             },error: function(response){
+				alert("Error with json post" + response);
+			 
+			}
+			
+			
+		});
+		event.stopImmediatePropagation();
+		return false;
+	
+	});
+	
+	*/
  });
 
  
