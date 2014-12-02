@@ -5,44 +5,22 @@
 
 <!-- Main -->
 	<section class="wrapper style1">
-		<header>
-			<h2><center>Order A Gift Certificate!</center></h2>
-		</header>
-		
+	<header>
+		<h2><center>Order A Gift Certificate!</center></h2>
+	</header>
+	<script>
+		function proceed(){
+			if(confirm("Do you want to proceed with th submission?")==false){
+				return false;
+			}
+		}
+	</script>
 		<div id="giftContainer" class="container">
 			<!-- Content -->
-				
-				<form class="cmxform" id="giftForm" method="post" action="/giftemail">
-					<div class="row half collapse-at-4">
-						<fieldset>
-						<section class="giftInput">
-							<h3>Gift Certificate Order Form</h3>
+					<form class="cmxform" id="giftForm" method="post" action="/giftemail" onsubmit="return proceed()">
+						<div class="row half collapse-at-2">
+						 <fieldset> 
 							<legend>Please provide your name, email address</legend>
-							<form  id="giftCertOrderForm" action="/gift_mail" method = "post">							
-								<div class="giftInput">
-									<label for="giftInputName">Name</label>
-									<span><input class="giftOrdererName" id="giftInputName" name="giftInputName" type="text" required/></span>
-									<label for="phone">Phone</label>
-									<span><input type="text" name="phone" id="phone" required/></span>
-								</div>
-								<div class="6u">
-									<input type="text" name="inputEmail" id="inputEmail" placeholder="Email" required/>
-									<input type="text" name="inputSubject" id="inputSubject" placeholder="Subject" required/>
-								</div>
-									<div class="12u">
-											<textarea name="inputMessage" id="inputMessage" placeholder="Message" rows="5" required></textarea>
-											<input type="submit" class="button alt" value="Send Message" />
-									</div>
-									
-										
-									
-							</form>
-								<script>
-						
-								$("#contactFooterForm").validate() // initialize the plugin
-								
-								</script>
-						</section>
 								<div class="12u">
 									
 									  <label for="giftInputName">Name</label>
@@ -60,6 +38,12 @@
 									
 									  <label for="giftInputEmail">E-Mail (required)</label>
 									  <input id="giftInputEmail" type="email" name="giftInputEmail" required/>
+									
+								</div>
+								<div class="12u">
+									
+									  <label for="giftInputPhone">Phone (required)</label>
+									  <input id="giftInputPhone" type="text" name="giftInputPhone" required/>
 									
 								</div>
 								<div class="12u">
@@ -147,13 +131,13 @@
 								</div>
 								 <input class="submit" type="submit" value="Order"/>
 								
-						</fieldset>
+						  </fieldset>
 						
 					</form>
 					
 					<script>
 						
-								$('#giftForm').validate(); // initialize the plugin
+								$('#giftForm').validate() // initialize the plugin
 								
 					</script>
 				

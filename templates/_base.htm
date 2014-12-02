@@ -38,8 +38,24 @@
 		
 		<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript">
+		function proceed(){
+				if(confirm("Do you want to proceed with the submission?")==false){
+					return false;
+				}
+			}
 		
-	
+			$(document).ready(function(){ 
+				$("input[name=inputSubject]").change(function() {
+        			$("#shoeOptions").hide();
+        			
+    			}); 
+    			$("input[id=shoes]").change(function() {
+        			$("#shoeOptions").show();
+    			}); 
+
+			});
+		</script>
 		
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
@@ -84,7 +100,9 @@
 			  {% block bodycontent %}
 			  {% endblock %}
 			</div>
-			<!-- Footer -->
+			
+
+				<!-- Footer -->
 			<div id="footer">
 				<div class="container">
 					<div class="row ">
@@ -114,23 +132,34 @@
 							</div>
 						</div>
 						<section class="6u">
-							<h3>Contact Us</h3>
-							<form  id="contactFooterForm" action="/contact_mail" method = "post">
-							
-							
-							
+							<h3>Get In Touch</h3>
+							<form  action="/contact_mail" method = "post" onsubmit="return proceed()">
 								<div class="row half collapse-at-2">
 									<div class="6u">
+										Subject:<p>
+										<input type="radio" name="inputSubject" id="inputSubject" value="Appointment" required/>Appointment
+										<input type="radio" name="inputSubject" id="shoes" value="Shoes" />Shoes
+											<div id="shoeOptions" style="display: none">
+												Gender
+												<select name="gender">
+												  <option value="M" >M</option>
+												  <option value="F">F</option>
+												</select>
+												Size
+												<select name="size">
+												  <option value="5" >5</option>
+												  <option value="6" >6</option>
+												  <option value="7" >7</option>
+												  <option value="8" >8</option>
+												  <option value="9">9</option>
+												  <option value="10">10</option>
+												</select>
+											</div>
+										<input type="radio" name="inputSubject" id="inputSubject" value="Lessons" />Lessons
+										<input type="radio" name="inputSubject" id="inputSubject" value="Other" />Other
 										<input type="text" name="inputName" id="name" placeholder="Name" required/>
-										<input type="text" name="phone" id="phone" placeholder="Phone" required/>
-									</div>
-									<div class="6u">
-										<input type="text" name="inputEmail" id="inputEmail" placeholder="Email" required/>
-										<input type="text" name="inputSubject" id="inputSubject" placeholder="Subject" required/>
-									</div>
-									
-								</div>
-								<div class="12u">
+										<input type="text" name="inputPhone" id="phone" placeholder="Phone" required/>
+										<input type="email" name="inputEmail" id="inputEmail" placeholder="Email" required/>
 										<textarea name="inputMessage" id="inputMessage" placeholder="Message" rows="5" required></textarea>
 										<input type="submit" class="button alt" value="Send Message" />
 								</div>
@@ -138,16 +167,10 @@
 									
 								
 							</form>
-								<script>
-						
-								$("#contactFooterForm").validate() // initialize the plugin
-								
-								</script>
 						</section>
 					</div>
 				</div>
 
-				
 				
 				
 				

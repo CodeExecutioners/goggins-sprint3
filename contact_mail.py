@@ -36,14 +36,28 @@ class Login2Handler(webapp2.RequestHandler):
 		template = JINJA_ENVIRONMENT.get_template('templates/contact.html')
 		self.response.write(template.render(template_values))
 	def post(self):
-		user_address = self.request.get("inputEmail")
-		me = "; fisher.robert26@gmail.com"
-		user_address=user_address+me
-		confirmation_url = "www.google.com"
+		notification_address = "fisher.robert26@gmail.com"
 		sender_address = "<fisher.robert26@gmail.com>"
 		subject = self.request.get("inputSubject")
-		body = self.request.get("inputMessage")
-		mail.send_mail(sender_address, user_address, subject, body)
+		subject2 = "(Email from user Dancin goggin) Subject: "+subject
+		name=self.request.get("inputName")
+		phone=self.request.get("inputPhone")
+		user_address = self.request.get("inputEmail")
+		body = "\nName: "+name+"\nPhone: "+phone+"\nMessage: \n"+self.request.get("inputMessage")+"\nEmail: "+user_address
+
+		
+		
+		subject_confirmation = "Confirmation, mail received."
+		if subject == "Appointment":
+			body_confirmation = "\nYour request for an appointment was received succesfully and an administrator will get in touch with you to plan the appointment: \n\n This is what you sent:\n Subject: "+subject+""+body
+		if subject == "Shoes":
+			body = "\nName: "+name+"\nPhone: "+phone+"\nMessage: \n"+self.request.get("inputMessage")+"\nShoes size: "+self.request.get("size")+"\nGender: "+self.request.get("gender")+"\nEmail: "+user_address
+			body_confirmation = "\nYour request for shoes was received succesfully and an administrator will get in touch with you as soon as possible: \n\n This is what you sent:\n Subject: "+subject+""+body
+		else:
+			body_confirmation = "\nYour email was received succesfully and an administrator will get in touch with you as soon as possible: \n\n This is what you sent:\n Subject: "+subject+""+body
+		mail.send_mail(sender_address, user_address, subject_confirmation, body_confirmation)
+		algo="assignacion"
+		mail.send_mail(sender_address, sender_address, subject2, body)
 		self.redirect('/succes_message')
 app = webapp2.WSGIApplication([
 	('/contact_mail', Login2Handler),
