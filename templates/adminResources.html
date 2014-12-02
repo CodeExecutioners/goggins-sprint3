@@ -1,87 +1,28 @@
 {% extends "templates/_base.htm" %}
 {% block bodycontent %}
-		
-	<script>
-		var editor1, editorLinks, html = '';
-		
-		function createEditor() {
-			if ( editor1 )
-				return;
 
-			// Create a new editor instance inside the <div id="editor"> element,
-			// setting its value to html.
-			var config = {};
-			editor1 = CKEDITOR.appendTo('editor1', config, html );
+<script type="text/javascript">
+			function hideshow(which){
 			
-
-			// Update button states.
-			document.getElementById( 'remove' ).style.display = '';
-			document.getElementById( 'create' ).style.display = 'none';
-		}
-
-		function removeEditor() {
-			if ( !editor1 )
-				return;
-
-			// Retrieve the editor content. In an Ajax application this data would be
-			// sent to the server or used in any other way.
-			html = editor1.getData();
-
-			// Update <div> with "Edited Content".
-			document.getElementById( 'editorcontent1' ).innerHTML = html;
-			// Show <div> with "Edited Content".
-			document.getElementById( 'content1' ).style.display = '';
-			// Update button states.
-			document.getElementById( 'remove' ).style.display = 'none';
-			document.getElementById( 'create' ).style.display = '';
-
-			// Destroy the editor.
-			editor1.destroy();
-			editor1 = null;
-		}
-		
-		function createEditorLinks() {
-			if ( editorLinks )
-				return;
-
-			// Create a new editor instance inside the <div id="editor"> element,
-			// setting its value to html.
-			var config = {};
-			editorLinks = CKEDITOR.appendTo('editorLinks', config, html );
+				var resArray = [];
+				
 			
-
-			// Update button states.
-			document.getElementById( 'saveLinks' ).style.display = '';
-			document.getElementById( 'createLinks' ).style.display = 'none';
-		}
-
-		function saveEditorLinks() {
-		
-			if ( !editorLinks )
-				return;
-			if ( CKEDITOR.instances.editorLinks.getData() == '' ){
-					alert( 'There is no data available.' );
+				{% for resource in resources %}
+					res = document.getElementById('{{resource.key.id()}}')
+					resArray.push(res)
+				{% endfor %}
+				
+				var i = 0
+				{% for resource in resources %}
+					if (which.id=='{{resource.key.id()}}') {
+						resArray[i].style.display="block"
+					}else{
+						resArray[i].style.display="none"
+					}
+					i = i + 1
+				{% endfor %}
 			}
-			// Retrieve the editor content. In an Ajax application this data would be
-			// sent to the server or used in any other way.
-			html = editorLinks.getData();
-			alert(html)
-			// Update <div> with "Edited Content".
-			document.getElementById( 'editorcontentLinks' ).innerHTML = html;
-			// Show <div> with "Edited Content".
-			document.getElementById( 'contentLinks' ).style.display = '';
-			// Update button states.
-			document.getElementById( 'saveLinks' ).style.display = 'none';
-			document.getElementById( 'createLinks' ).style.display = '';
-			
-			// Destroy the editor.
-			editorLinks.destroy();
-			editorLinks = null;
-		}
-		
-		
-		
-	</script>	
+		</script>
 		<!-- Main -->
 		
 
@@ -94,102 +35,155 @@
 								<!-- Sidebar -->
 									
 									<section>
-									<h3>Links</h3>
-									
-											<h4>Dance Shoes</h4>
-											<ul><a href="javascript:hideshow(document.getElementById('link1'))">Very Fine Dance Shoes</a></ul>
-											<ul><a href="javascript:hideshow(document.getElementById('link2'))">Amercian Classic</a></ul>
-											<h4>Locations</h4>
-											<ul><a href="javascript:hideshow(document.getElementById('link3'))">Chippewa Valley Dance Club</a></ul>
+										<h3>Links</h3>
+										{% for resource in resources %}
+											{% if resource.type == 'link' %}
+												<ul><a href="javascript:hideshow(document.getElementById('{{resource.key.id()}}'))">{{resource.title}}</a></ul>
+											{% endif %}
+										{% endfor %}
 										
+										<h3>Locations</h3>
+										{% for resource in resources %}
+											{% if resource.type == 'location' %}
+												<ul><a href="javascript:hideshow(document.getElementById('{{resource.key.id()}}'))">{{resource.title}}</a></ul>
+											{% endif %}
+										{% endfor %}
 									</section>
 						
 							</div>
 						</div>
+
 						<div class="8u skel-cell-important">
 							<div id="content">
 
 								<!-- Content -->
-									<article id="link1" style="display: none;">
-										<header>
-											<a href="https://www.veryfineshoes.com">
-											<h2>Very Fine Dance Shoes</h2>
-											</a>
-										</header>
-										<a href="https://www.veryfineshoes.com">
-											www.veryfineshoes.com
-										</a>
-
-									<p>
-										<input onclick="createEditorLinks();" type="button" value="Edit" id="createLinks">
-										<input onclick="saveEditorLinks();" type="button" value="Save" id="saveLinks" style="display:none">
-									</p>
-									<div id="editorLinks">
-									</div>
-										<div id="contentLinks" style="display: none">
-																			
+												
+								{% for resource in resources %}
+									{% if resource.type == 'link' %}
+											<article id="{{resource.key.id()}}" style="display: none;">
 										
-										<div id="editorcontentLinks">
-										
-										</div>
-										<p>Very Fine Dancesport Shoes was founded in June 1998. 
-										We are OEM dance footwear manufacturer & supplier and we also carry our own house brands 
-										where the emphasis is on high-end design dance shoes using premium materials. Since our beginning,
-										the principle elements of our company have been focused on our service and delivery of quality products
-										with affordable prices. As a result, Very Fine has successfully became one of the largest dance shoes 
-										supplier in the US. Our relentless pursuit for perfection has made our dance shoes the first choice of
-										many professional dancers.
-										</p>
-										
-									</div>
+												<form class="cmxform" id="resForm{{resource.key.id()}}" method="post" action="/adminResources" onsubmit="setTimeout(function () { window.location.reload(); }, 200)">
+													<div class="8u skel-cell-important">
+													 <fieldset>
+															<div class="12u">
+																
+																  <label for="resTitle">Link Title</label>
+																  <input id="resTitle" name="resTitle" type="text" value="{{resource.title}}" required/>
+																
+															</div>
+															<div class="12u">
+																
+																  <label for="resAddress">Link Address</label>
+																  <input id="resAddress" name="resAddress" type="text" value="{{resource.linkOrAddress}}" required/>
+																
+															</div>
+															<div class="12u">
+																
+																  <label for="resDesc">Link Description</label>
+																  <textarea  id="resDesc" name="resDesc" form="resForm{{resource.key.id()}}">{{resource.desc}}</textarea>
+																
+															</div>
+															<input type="hidden" name="resType" value="{{resource.type}}" />
+															<input type="hidden" name="resID" value="{{resource.key.id()}}" />
+															<input class="submit" type="submit" name="Update" value="Update"/>
+															<input class="submit" type="submit" name="Delete" value="Delete"/>
+															
+													  </fieldset>
+													
+												</form>			
 									
-										
-										
-										
-										
+										</article>
+									{% endif %}
+								{% endfor %}
+								
+								{% for resource in resources %}
+									{% if resource.type == 'location' %}
+									<article id="{{resource.key.id()}}" style="display: none;">
+										<form class="cmxform" id="resForm{{resource.key.id()}}" method="post" action="/adminResources" onsubmit="setTimeout(function () { window.location.reload(); }, 200)">
+											<div class="8u skel-cell-important">
+											 <fieldset>
+													<div class="12u">
+														
+														  <label for="resTitle">Location Title</label>
+														  <input id="resTitle" name="resTitle" type="text" value="{{resource.title}}" required/>
+														
+													</div>
+													<div class="12u">
+														
+														  <label for="resAddress">Location Address</label>
+														  <input id="resAddress" name="resAddress" type="text" value="{{resource.linkOrAddress}}" required/>
+														
+													</div>
+													<div class="12u">
+														
+														  <label for="resDesc">Location Description</label>
+														  <textarea  id="resDesc" name="resDesc" form="resForm{{resource.key.id()}}">{{resource.desc}}</textarea>
+														
+													</div>
+													<input type="hidden" name="resType" value="{{resource.type}}" />
+													<input type="hidden" name="resID" value="{{resource.key.id()}}" />
+													<input class="submit" type="submit" name="Update" value="Update"/>
+													<input class="submit" type="submit" name="Delete" value="Delete"/>
+													
+											  </fieldset>
+											
+										</form>	
 									</article>
-									<article id="link2" style="display: none;">
-										<header>
-											<h2>American Classic Dance Shoes</h2>
-										</header>
-										<p></p>
-									</article>
-									<article id="link3" style="display: none;">
-										<header>
-											<a href="http://www.dance.spinstep.com/Main/CVDC">
-											<h2>Chippewa Valley Dance Club</h2>
-											</a>
-										</header>
-										<a href="http://www.dance.spinstep.com/Main/CVDC">
-											www.dance.spinstep.com/Main/CVDC
-										</a>
-										<p>The Chippewa Valley Dance Club (CVDC) is a non-profit ballroom dance club that will be sponsoring
-										five Saturday night dances this year. Also, five Sunday afternoon dances will be included this season 
-										which feature music presented by Goggin Ballroom Dancing. Dances are held at the St Mary's Community Center,
-										1812 Lynn Av, Altoona, WI.</p>
-										
-										<p>CVDC Membership Membership dues are $89 per person, which entitles you to attend all ten Saturday 
-										& Sunday dances. Nonmembers pay $16 per person at the door on Saturdays, Sunday dances are $10 per person.<p>
-										<p>Members enjoy:</p>
-										<ul>
-											<li>A $41 discount compared to the non-member fees </li>
-											<li>ABetter bands, because your advance payment helps us book good bands in advance</li>
-											<li>A stronger dance club: when you join us, all of your membership dues go to the dance club.</li>
-										</ul>
-												<form action="http://maps.google.com/maps" method="get" target="_blank">
-													<h1>Get Directions</h1>
-													<p>Enter your starting address:</p>
-													<input type="text" name="saddr" />
-													<input type="hidden" name="daddr" value="1812 Lynn Av, Altoona, WI" />
-													<input type="submit" value="Get Directions" />
-												</form>
-									</article>
+											
+									{% endif %}
+									
+								{% endfor %}
 							</div>
 						</div>
 					</div>
 				</div>
-			</section>			
+			</section>
 
+<div class="container">
+<form class="cmxform" id="newResourceForm" method="post" action="/adminResources" onsubmit="setTimeout(function () { window.location.reload(); }, 200)">
+		<div>
+		 <fieldset>
+		 
+			<legend>Add a new resource</legend>
+			
+				<div class="12u">
+					
+					 <label for="resType">Resource Type</label>
+					 <select id="resType" name="resType" size="1" required>
+					  <option value="">Select a type</option>
+					  
+					  <option value="link">link</option>
+					  <option value="location">location</option>
+				
+					</select>
+					
+				</div>
+			
+				<div class="12u">
+					
+					  <label for="resTitle">Title</label>
+					  <input id="resTitle" name="resTitle" type="text" required/>
+					
+				</div>
+				<div class="12u">
+					
+					  <label for="resAddress">Resource Address</label>
+					  <input id="resAddress" name="resAddress" type="text" required/>
+					
+				</div>
+				<div class="12u">
+					
+					  <label for="resDesc">Resource Description</label>
+					  <textarea  id="resDesc" name="resDesc" form="newResourceForm"></textarea>
+					
+				</div>
+				<input type="hidden" name="resID" value="000" />
+				 <input class="submit" type="submit" value="Add"/>
+				
+		  </fieldset>
+		
+	</form>
+</div>
 		
 
 {% endblock %}

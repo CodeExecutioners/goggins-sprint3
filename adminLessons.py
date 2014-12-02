@@ -18,21 +18,21 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 	
 class AdminLessonsPage(webapp2.RequestHandler):
-	def dispatch(self):
+	#def dispatch(self):
 		# Get a session store for this request.
-		self.session_store = sessions.get_store(request=self.request)
-		try:
+	#	self.session_store = sessions.get_store(request=self.request)
+	#	try:
 		# Dispatch the request.
-			webapp2.RequestHandler.dispatch(self)
-		finally:
+	#		webapp2.RequestHandler.dispatch(self)
+	#	finally:
 			# Save all sessions.
-			self.session_store.save_sessions(self.response)
+	#		self.session_store.save_sessions(self.response)
 	def get(self):
 		#models.Lesson.deleteAllLessons()
-		initiated = self.session.get('initiated')
-		x='true'
-		if initiated != x:
-			self.redirect('/login')
+		#initiated = self.session.get('initiated')
+		#x='true'
+		#if initiated != x:
+		#	self.redirect('/login')
 		dropInlessons = models.Lesson.getAllLessonsByType('Drop')
 		groupLessons = models.Lesson.getAllLessonsByType('Group')
 		#get lesson by city
@@ -51,7 +51,7 @@ class AdminLessonsPage(webapp2.RequestHandler):
 		
 		#update or insert
 		for lesson in jsonObject:
-			models.Lesson.deleteAllLessons()
+			#models.Lesson.deleteAllLessons()
 			type = lesson['Type']
 			city = lesson['City']
 			date = lesson['Date']
@@ -62,10 +62,10 @@ class AdminLessonsPage(webapp2.RequestHandler):
 			
 		
 		#self.redirect('/lessons')	
-	@webapp2.cached_property
-	def session(self):
+	#@webapp2.cached_property
+	#def session(self):
 		# Returns a session using the default cookie key.
-		return self.session_store.get_session()
+	#	return self.session_store.get_session()
 
 config = {}
 config['webapp2_extras.sessions'] = {

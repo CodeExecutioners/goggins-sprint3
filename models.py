@@ -208,33 +208,35 @@ class Resource(ndb.Model):
 	@classmethod
 	def insertResource(self, type, title, linkOrAddress, desc):
 		try:
-			resource = self(id = (type + title), type = type, title = title, linkOrAddress = linkOrAddress, desc = desc)
+			resource = self(type = type, title = title, linkOrAddress = linkOrAddress, desc = desc)
 			resource.put()
 			logging.debug('insertResource success')
 		except:
 			logging.error('insertResource failed')
 	
 
-	#insert
 	@classmethod
-	def updateResourceByID(self, type, title, linkOrAddress, desc):
+	def updateResourceByID(self, id, type, title, linkOrAddress, desc):
+			logging.debug('updatingResource')
+			
 			try:
-				resource_key = ndb.Key(self, (type+title))
-				logging.debug(resource_key)
-				updated_resource = resource_key.get()
-				if(updated_resource != None):
-					logging.debug('Updating record')
-					updated_resource.type = type
-					updated_resource.title = title
-					updated_resource.linkOrAddress = linkOrAddress
-					updated_resource.desc = desc
-					updated_resource.put()
-					logging.debug('updateResource success')
+			
+				if(id != 'None'):
+					updated_resource = Resource.get_by_id(int(id))
+					logging.debug(updated_resource)
+				
+					if(updated_resource != None):
+						updated_resource.title =title
+						updated_resource.type = type
+						updated_resource.linkOrAddress = linkOrAddress
+						updated_resource.desc = desc
+						updated_resource.put()
+						logging.debug('updateResource success')
 				else:
 					logging.debug('Inserting new record')
 					self.insertResource(type, title, linkOrAddress, desc)
 			except:
-				logging.error('updateResource failed')	
+				logging.error('updateResource failed')
 		
 	#delete
 	@classmethod
@@ -246,5 +248,13 @@ class Resource(ndb.Model):
 		except:
 			logging.error('deleteAllResources failed')
 						
+	@classmethod	
+	def deleteResourceByID(self, id):
+			try:
 			
-			
+				if(id != 'None'):
+					delete_resource = Resource.get_by_id(int(id))
+					delete_resource.key.delete()
+					logging.debug('deleteResourceByID success')
+			except:
+				logging.error('deleteResourceByID failed')

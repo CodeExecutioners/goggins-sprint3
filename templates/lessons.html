@@ -10,7 +10,7 @@
 <div id="content">
  <form>
             <textarea name="editor1" id="editor1" rows="10" cols="80">
-                This is my textarea to be replaced with CKEditor.
+                &lt;p&gt;Initial value.&lt;/p&gt;
             </textarea>
             <script>
                 // Replace the <textarea id="editor1"> with a CKEditor
@@ -58,6 +58,11 @@
     </table>
 	
 
+	<script type="text/javascript">
+	var editor_data = CKEDITOR.instances.editor1.getData();
+	alert(editor_data);
+	</script>
+	
 
 <p>Group Lessons/Dances Drop-In</p>
 <table id="dropInLessons" class="display" cellspacing="0" width="100%">

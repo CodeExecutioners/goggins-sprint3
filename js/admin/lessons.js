@@ -133,6 +133,7 @@ var par = $(this).parent().parent(); //tr
  
 
 function postLessonsTable(tableID, path){
+	alert("postLessonsTable");
     var keys = $(tableID +' tbody tr').map(function(i){
 			id = this.id;
 			return id;
@@ -204,7 +205,7 @@ function postLessonsTable(tableID, path){
 		
 		
 		jsonTable = JSON.stringify(tableObject);
-		//alert("tableObject:" + jsonTable);
+		alert("tableObject:" + jsonTable);
 		
 		
 		

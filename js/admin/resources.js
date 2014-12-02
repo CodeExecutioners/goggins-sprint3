@@ -1,4 +1,4 @@
-function AddResource(){ 
+function AddLink(){ 
 $("#resourceTable tbody").append(
  "<tr>"+
  "<td><input type='text'/></td>"+
@@ -19,12 +19,10 @@ var par = $(this).parent().parent(); //tr
  var type = par.children("td:nth-child(1)");
  var title = par.children("td:nth-child(2)");
  var linkOrAddress = par.children("td:nth-child(3)");
- var desc = par.children("td:nth-child(4)");
- var tdButtons = par.children("td:nth-child(5)");
+ var tdButtons = par.children("td:nth-child(4)");
  type.html(type.children("input[type=text]").val()); 
  title.html(title.children("input[type=text]").val()); 
  linkOrAddress.html(linkOrAddress.children("input[type=text]").val());
- desc.html(desc.children("input[type=text]").val());
  tdButtons.html("<button class='btnDeleteRes'value='DeleteRes'>Delete</button><button class='btnEditRes'value='EditRes'>Edit</button>");
  $(".btnEditRes").bind("click", EditRes);
  $(".btnDeleteRes").bind("click", DeleteRes);
@@ -37,8 +35,7 @@ var par = $(this).parent().parent(); //tr
  var type = par.children("td:nth-child(1)");
  var title = par.children("td:nth-child(2)");
  var linkOrAddress = par.children("td:nth-child(3)");
- var desc = par.children("td:nth-child(4)");
- var tdButtons = par.children("td:nth-child(5)");
+ var tdButtons = par.children("td:nth-child(4)");
  type.html("<input type='text' id='txtTitle' value='"+type.html()+"'/>");
  title.html("<input type='text' id='txtTitle' value='"+title.html()+"'/>");
  linkOrAddress.html("<input type='text' id='txtLink' value='"+linkOrAddress.html()+"'/>");
@@ -119,3 +116,10 @@ $('#resourceSaveTable').on('click', function (event) {
 	});
 	
 });
+
+
+ $('#addLink').on('click', function (event) {
+	event.preventDefault();
+	path = '/adminResources'
+	postLessonsTable('#privateLessons', path);
+ });
